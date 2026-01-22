@@ -1,16 +1,3 @@
-useEffect(() => {
-  if (typeof window !== 'undefined' && window.Telegram?.WebApp) {
-    window.Telegram.WebApp.ready();
-    window.Telegram.WebApp.expand();
-  }
-
-  const storedInterests = JSON.parse(localStorage.getItem('thirstInterests') || '[]');
-  if (storedInterests.length >= 3) {
-    setSelectedInterests(storedInterests);
-    setScreen('feed');
-  }
-}, []);
-
 'use client';
 
 import { useEffect, useState } from 'react';
