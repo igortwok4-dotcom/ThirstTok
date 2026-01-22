@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { initTelegram } from '@telegram-apps/sdk-react';
 import { AnimatePresence } from 'framer-motion';
 import Onboarding from '../components/Onboarding';
 import Feed from '../components/Feed';
@@ -14,7 +13,13 @@ export default function Home() {
   const [likedVideos, setLikedVideos] = useState<string[]>([]);
 
   useEffect(() => {
-    initTelegram();
+    // Прямая инициализация TG Mini App без SDK (работает всегда)
+    if (typeof window !== 'undefined' && window.Telegram?.WebApp) {
+      window.Telegram.WebApp.ready();
+      window.Telegram.WebApp.expand();
+    }
+
+    // Проверяем сохранённые интересы
     const storedInterests = JSON.parse(localStorage.getItem('thirstInterests') || '[]');
     if (storedInterests.length >= 3) {
       setSelectedInterests(storedInterests);
